@@ -1,24 +1,35 @@
-import logo from './logo.svg';
+import { NavLink, Outlet } from 'react-router-dom';
 import './App.css';
 
-function App() {
+function App({ error }) {
+
+  const notFound = () => {
+    if(error) {
+      return <div>Page Not Found</div>
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    
+    <>
+    
+      <header>
+
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/product">Product</NavLink>
+        <NavLink to="/user">Login</NavLink>
+
       </header>
-    </div>
+
+      <div className="App">
+
+        <Outlet />
+
+        {notFound()}
+
+      </div>
+    
+    </>
   );
 }
 

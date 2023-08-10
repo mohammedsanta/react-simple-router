@@ -1,13 +1,53 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import App from './App';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import User from './User';
+
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    errorElement: <App error={true} />,
+    element: <App />,
+    children: [
+      { index: true, element: <div>Home</div> },
+      {
+        path: 'product',
+        element: <div>product</div>
+      },
+    ]
+  },
+  {
+    path: 'user',
+    element: <User />,
+    children: [
+      { index: true, element: <div>You Are Logged in</div> },
+      {
+        path: 'profile',
+        element: <div>Profile</div>
+      },
+      {
+        path: 'cart',
+        element: <div>Cart</div>
+      }
+    ]
+  }
+]);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+
+    <RouterProvider router={router}>
+
+      
+
+    </RouterProvider>
+
   </React.StrictMode>
 );
 
