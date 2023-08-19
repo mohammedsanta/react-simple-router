@@ -7,7 +7,7 @@
 header {
   width: 100%;
   height: 60px;
-  background-color: aquamarine;
+  background-color: #2196F3;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -16,4 +16,30 @@ header {
 header a {
   text-decoration: none;
   font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+form {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+label {
+  font-size: 2rem;
+}
+
+form input {
+  width: 25rem;
+  margin: auto;
+}
+
+.sub {
+  width: 8rem;
+  height: 2rem;
+  border-radius: 1rem;
+  border: none;
+  margin-top: 2rem;
 }

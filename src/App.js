@@ -16,7 +16,8 @@ function App({ error }) {
       <header>
 
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/product">Product</NavLink>
+        <NavLink to="/posts">Posts</NavLink>
+        <NavLink to="/post/add">Add Post</NavLink>
         <NavLink to="/user">Login</NavLink>
 
       </header>

@@ -1,22 +1,63 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import User from './User';
+import { Provider } from 'react-redux';
+import ErrorPage from './components/ErrorPage/ErrorPage';
+import User from './components/User';
+import store from './store';
+import Posts from './components/PostList/Index';
 
+
+const AddPost = React.lazy(() => import("./components/AddPost/AddPost"))
+const Details = React.lazy(() => import("./components/Details/Details"))
+const EditPost = React.lazy(() => import("./components/Edit/EditPost"))
+
+const postParamHandler = ({ params }) => {
+  if(isNaN(params.id)){
+    throw new Response("Bad Request",{
+      statusText: "Please Make Sure to insert correct post ID",
+      status: 400
+    });
+  }
+  return '';
+}
 
 const router = createBrowserRouter([
+
   {
     path: '/',
-    errorElement: <App error={true} />,
+    errorElement: <ErrorPage />,
     element: <App />,
     children: [
       { index: true, element: <div>Home</div> },
       {
-        path: 'product',
-        element: <div>product</div>
+        path: '/posts',
+        element: <Posts />,
+      },      {
+        path: '/post/add',
+        element: 
+          <Suspense fallback="Please Wait...">
+            <AddPost />
+          </Suspense>
+      },
+      {
+        path: '/post/:id',
+        element: 
+        <Suspense fallback="Please Wait...">
+          <Details />
+        </Suspense>,
+        loader: postParamHandler
+      },
+      {
+        path: '/post/:id/edit',
+        element: 
+        <Suspense fallback="Please Wait...">
+          <EditPost />
+        </Suspense>,
+        loader: postParamHandler
       },
     ]
   },
@@ -31,7 +72,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'cart',
-        element: <div>Cart</div>
+        element: <div>Cart</div>,
       }
     ]
   }
@@ -40,15 +81,13 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
 
-    <RouterProvider router={router}>
+  <Provider store={store}>
 
-      
+    <RouterProvider router={router} />
 
-    </RouterProvider>
+  </Provider>
 
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
